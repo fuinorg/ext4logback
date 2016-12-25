@@ -83,23 +83,6 @@
 				<version>3.0.2</version>
 			</plugin>
 
-			<plugin>
-				<groupId>org.netbeans.tools</groupId>
-				<artifactId>sigtest-maven-plugin</artifactId>
-				<version>1.0</version>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<packages>org.fuin.utils4j</packages>
-				</configuration>
-			</plugin>
-
 		</plugins>
 
 	</build>
