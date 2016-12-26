@@ -3,8 +3,7 @@
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -
-				%msg%n</Pattern>
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
 		</encoder>
 	</appender>
 
@@ -12,6 +11,6 @@
 		<appender-ref ref="STDOUT" />
 	</root>
 
-	<logger name="org.fuin.marchetyper" level="INFO" />
+	<logger name="org.fuin.ext4logback" level="INFO" />
 
 </configuration>
