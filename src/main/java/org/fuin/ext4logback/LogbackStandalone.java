@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
@@ -37,21 +38,63 @@ import ch.qos.logback.core.joran.spi.JoranException;
  */
 public final class LogbackStandalone {
 
+    private static final Logger LOG = LoggerFactory.getLogger(LogbackStandalone.class);
+    
+    /**
+     * Initializes the Logback system using an existing configuration file.
+     * Fails with a runtime exception if the file does not exist. This is a
+     * convenience method for using it in a main method if the first argument is
+     * the logfile path and name.
+     * 
+     * @param args
+     *            Arguments passed through from the main method.
+     */
+    public final void init(final String[] args) {
+        if ((args == null) || (args.length == 0)) {
+            init(new File("logback.xml"));
+        } else {
+            init(new File(args[0]));
+        }
+    }
+
+    /**
+     * Initializes the Logback system using an existing configuration file.
+     * Fails with a runtime exception if the file does not exist. This is a
+     * convenience method for using it in a main method if the first argument is
+     * the logfile path and name.
+     * 
+     * @param args
+     *            Arguments passed through from the main method.
+     * @param params
+     *            Parameters to use for creation of the 'logback.xml' file.
+     */
+    public final void init(final String[] args, final NewLogConfigFileParams params) {
+        if ((args == null) || (args.length == 0)) {
+            init(new File("logback.xml"), params);
+        } else {
+            init(new File(args[0]), params);
+        }
+    }
+
     /**
      * Initializes the Logback system using an existing configuration file.
      * Fails with a runtime exception if the file does not exist.
      * 
      * @param logbackXmlFile
-     *            File to load.
+     *            File to load - Cannot be <code>null</code>.
      */
     public final void init(final File logbackXmlFile) {
+        if (logbackXmlFile == null) {
+            throw new IllegalArgumentException("The arg 'logbackXmlFile' cannot be null");
+        }
         try {
-            if (!logbackXmlFile.exists()) {
+            final File configFile = logbackXmlFile.getAbsoluteFile();
+            if (!configFile.exists()) {
                 throw new FileNotFoundException(
-                        "Logback XML configuration file not found: " + logbackXmlFile.toString());
+                        "Logback XML configuration file not found: " + configFile.toString());
             }
-            System.setProperty("log_path", logbackXmlFile.getParentFile().getCanonicalPath());
-            loadLogfile(logbackXmlFile);
+            System.setProperty("log_path", configFile.getParentFile().getCanonicalPath());
+            loadLogfile(configFile);
         } catch (final IOException ex) {
             throw new RuntimeException("Error initializing Logback", ex);
         }
@@ -62,18 +105,25 @@ public final class LogbackStandalone {
      * be created if it does not exist.
      * 
      * @param logbackXmlFile
-     *            File to load.
+     *            File to load - Cannot be <code>null</code>.
      * @param params
-     *            Parameters to use for creation of the 'logback.xml' file.
+     *            Parameters to use for creation of the 'logback.xml' file - Cannot be <code>null</code>.
      */
     public final void init(final File logbackXmlFile, final NewLogConfigFileParams params) {
+        if (logbackXmlFile == null) {
+            throw new IllegalArgumentException("The arg 'logbackXmlFile' cannot be null");
+        }
+        if (params == null) {
+            throw new IllegalArgumentException("The arg 'params' cannot be null");
+        }
         try {
-            if (!logbackXmlFile.exists()) {
-                writeInitialLogbackXml(logbackXmlFile, params.getRootLevel(), params.getPkgName(),
+            final File configFile = logbackXmlFile.getAbsoluteFile();
+            if (!configFile.exists()) {
+                writeInitialLogbackXml(configFile, params.getRootLevel(), params.getPkgName(),
                         params.getPkgLevel(), params.getLayoutPattern(), params.getLogFilename());
             }
-            System.setProperty("log_path", logbackXmlFile.getParentFile().getCanonicalPath());
-            loadLogfile(logbackXmlFile);
+            System.setProperty("log_path", configFile.getParentFile().getCanonicalPath());
+            loadLogfile(configFile);
         } catch (final IOException ex) {
             throw new RuntimeException("Error initializing Logback", ex);
         }
@@ -102,8 +152,7 @@ public final class LogbackStandalone {
             final String pkgName, final Level pkgLevel, final String layoutPattern, final String logFilename)
             throws IOException {
         // @formatter:off
-        final String xml = 
-                  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" 
+        final String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" 
                 + "<configuration>\n"
                 + "    <appender name=\"FILE\" class=\"ch.qos.logback.core.rolling.RollingFileAppender\">\n"
                 + "        <file>${log_path}/" + logFilename + ".log</file>\n"
@@ -144,6 +193,7 @@ public final class LogbackStandalone {
         } catch (final JoranException ex) {
             throw new RuntimeException(ex);
         }
+        LOG.info("Logging initialized: {}", logbackXmlFile);
     }
 
 }
