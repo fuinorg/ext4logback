@@ -13,7 +13,7 @@ Extensions for Logback
 
 Configuring Logback for a standalone application is easy:
 ```java
-new LogbackStandalone().init(args, new NewLogConfigFileParams("your.app.package", "myapp"));
+new LogbackStandalone().init(new File("path/to/your/logback.xml"), new NewLogConfigFileParams("your.app.package", "myapp"));
 ```
 For more options, see [JavaDoc](https://www.javadoc.io/doc/org.fuin/ext4logback).
 
@@ -31,8 +31,8 @@ Here is an example of a main method:
 public static void main(final String[] args) {
     try {
         // Initializes Logback by reading the XML config file.
-        // If the file does not exist, it will be created with some
-        // defaults.
+        // If the file does not exist, it will be created with some defaults.
+        // This is a convenience method that directly uses the main method's arguments.
         new LogbackStandalone().init(args, new NewLogConfigFileParams("your.app.package", "myapp"));
         LOG.info("Application running...");
         // Your code goes here...
