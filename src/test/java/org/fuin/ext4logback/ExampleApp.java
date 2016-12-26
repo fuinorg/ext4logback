@@ -32,15 +32,16 @@ public final class ExampleApp {
      * 
      * @param args
      *            Only optional argument is the 'logback.xml' file path and
-     *            name. It's assumed that the file name is 'logback.xml' and
-     *            it's in the current directory if no argument is provided.
+     *            name. If no argument is provided it's assumed that the file
+     *            name is 'logback.xml' and it's in the current directory.
      */
     public static void main(final String[] args) {
         try {
-            // Initializes Logback by reading the XML config file.
-            // If the file does not exist, it will be created with some
-            // defaults.
-            new LogbackStandalone().init(args, new NewLogConfigFileParams("org.fuin.ext4logback", "myapp"));
+            // Initializes Logback by reading the XML config file. If the file
+            // does not exist, it will be created with some defaults. This is a
+            // convenience method that directly uses the main method's
+            // arguments.
+            new LogbackStandalone().init(args, new NewLogConfigFileParams("your.app.package", "myapp"));
             LOG.info("Application running...");
             // Your code goes here...
             System.exit(0);

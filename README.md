@@ -25,8 +25,8 @@ Here is an example of a main method:
  * 
  * @param args
  *            Only optional argument is the 'logback.xml' file path and
- *            name. It's assumed that the file name is 'logback.xml' and
- *            it's in the current directory if no argument is provided.
+ *            name. If no argument is provided it's assumed that the file name 
+ *            is 'logback.xml' and it's in the current directory.
  */
 public static void main(final String[] args) {
     try {
