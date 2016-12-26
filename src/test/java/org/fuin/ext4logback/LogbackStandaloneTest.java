@@ -50,11 +50,11 @@ public class LogbackStandaloneTest {
             assertThat(logbackXmlFile.delete()).isTrue();
         }
 
-        final LogbackStandalone testee = new LogbackStandalone(this.getClass().getPackage().getName(),
-                logname);
+        final LogbackStandalone testee = new LogbackStandalone();
 
         // TEST
-        testee.init(logbackXmlFile);
+        testee.init(logbackXmlFile,
+                new NewLogConfigFileParams(this.getClass().getPackage().getName(), logname));
         LOG.info("logbackXmlFile={}", logbackXmlFile);
 
         // VERIFY
@@ -66,7 +66,7 @@ public class LogbackStandaloneTest {
         assertThat(System.getProperty("log_path")).isEqualTo(Utils4J.getTempDir().getCanonicalPath());
 
     }
-    
+
     @Test
     public void testwriteInitialLogbackXml() throws IOException {
 

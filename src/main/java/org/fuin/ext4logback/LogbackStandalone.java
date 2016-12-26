@@ -37,82 +37,40 @@ import ch.qos.logback.core.joran.spi.JoranException;
  */
 public final class LogbackStandalone {
 
-    private final Level rootLevel;
-
-    private final String pkgName;
-
-    private final Level pkgLevel;
-    
-    private final String layoutPattern;
-
-    private final String logFilename;
-    
     /**
-     * Constructor with mandatory values.
-     * 
-     * @param pkgName
-     *            Main package name (like "org.your.name").
-     * @param logFilename
-     *            Name of the log file without extension.
-     */
-    public LogbackStandalone(final String pkgName, final String logFilename) {
-        this(Level.WARN, pkgName, Level.INFO, 
-                "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n",
-                logFilename);
-    }
-
-    /**
-     * Constructor with all configuration options.
-     * 
-     * @param rootLevel
-     *            Level of the root logger.
-     * @param pkgName
-     *            Main package name (like "org.your.name").
-     * @param pkgLevel
-     *            Main package log level.
-     * @param layoutPattern
-     *            Layout pattern.
-     * @param logFilename
-     *            Name of the log file without extension.
-     */
-    public LogbackStandalone(final Level rootLevel, final String pkgName, final Level pkgLevel,
-            final String layoutPattern, final String logFilename) {
-        super();
-        this.rootLevel = rootLevel;
-        this.pkgName = pkgName;
-        this.pkgLevel = pkgLevel;
-        this.layoutPattern = layoutPattern;
-        this.logFilename = logFilename;
-    }
-
-    /**
-     * Initializes the Logback system using a configuration file.
-     * 
-     * @param logbackXmlFile
-     *            File to load or create if it does not exist.
-     */
-    public final void init(final File logbackXmlFile) {
-        init(logbackXmlFile, true);
-    }
-
-    /**
-     * Initializes the Logback system using a configuration file.
+     * Initializes the Logback system using an existing configuration file.
+     * Fails with a runtime exception if the file does not exist.
      * 
      * @param logbackXmlFile
      *            File to load.
-     * @param create
-     *            Create the file with defaults if it does not exist.
      */
-    public final void init(final File logbackXmlFile, final boolean create) {
+    public final void init(final File logbackXmlFile) {
         try {
             if (!logbackXmlFile.exists()) {
-                if (create) {
-                    writeInitialLogbackXml(logbackXmlFile, rootLevel, pkgName, pkgLevel, layoutPattern, 
-                            logFilename);
-                } else {
-                    throw new FileNotFoundException(
-                            "Logback XML configuration file not found: " + logbackXmlFile.toString());
-                }
+                throw new FileNotFoundException(
+                        "Logback XML configuration file not found: " + logbackXmlFile.toString());
+            }
+            System.setProperty("log_path", logbackXmlFile.getParentFile().getCanonicalPath());
+            loadLogfile(logbackXmlFile);
+        } catch (final IOException ex) {
+            throw new RuntimeException("Error initializing Logback", ex);
+        }
+    }
+
+    /**
+     * Initializes the Logback system using a configuration file. The file will
+     * be created if it does not exist.
+     * 
+     * @param logbackXmlFile
+     *            File to load.
+     * @param params
+     *            Parameters to use for creation of the 'logback.xml' file.
+     */
+    public final void init(final File logbackXmlFile, final NewLogConfigFileParams params) {
+        try {
+            if (!logbackXmlFile.exists()) {
+                writeInitialLogbackXml(logbackXmlFile, params.getRootLevel(), params.getPkgName(),
+                        params.getPkgLevel(), params.getLayoutPattern(), params.getLogFilename());
             }
             System.setProperty("log_path", logbackXmlFile.getParentFile().getCanonicalPath());
             loadLogfile(logbackXmlFile);
@@ -140,9 +98,9 @@ public final class LogbackStandalone {
      * @throws IOException
      *             Error writing the configuration file.
      */
-    public static void writeInitialLogbackXml(final File logbackXmlFile, final Level rootLevel, 
-            final String pkgName, final Level pkgLevel, final String layoutPattern, 
-            final String logFilename) throws IOException {
+    public static void writeInitialLogbackXml(final File logbackXmlFile, final Level rootLevel,
+            final String pkgName, final Level pkgLevel, final String layoutPattern, final String logFilename)
+            throws IOException {
         // @formatter:off
         final String xml = 
                   "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" 
@@ -164,8 +122,8 @@ public final class LogbackStandalone {
                 + "    <logger name=\"" + pkgName + "\" level=\"" + pkgLevel + "\" />\n" 
                 + "</configuration>\n";
         // @formatter:on
-        try (final Writer fw = new OutputStreamWriter(
-                new FileOutputStream(logbackXmlFile), Charset.forName("UTF-8"))) {
+        try (final Writer fw = new OutputStreamWriter(new FileOutputStream(logbackXmlFile),
+                Charset.forName("UTF-8"))) {
             fw.write(xml);
         }
     }
