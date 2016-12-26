@@ -23,23 +23,21 @@ Here is an example of a main method:
 /**
  * Starts the application.
  * 
- * @param args Only optional argument is the 'logback.xml' file path and name.
+ * @param args
+ *            Only optional argument is the 'logback.xml' file path and
+ *            name. It's assumed that the file name is 'logback.xml' and
+ *            it's in the current directory if no argument is provided.
  */
-public static void main(String[] args) {
-    final File logbackXmlFile;
-    if ((args == null) || (args.length == 0)) {
-        // Default name if no config file is provided
-        logbackXmlFile = new File("./logback.xml");
-    } else {
-        logbackXmlFile = new File(args[0]);
-    }
+public static void main(final String[] args) {
     try {
         // Initializes Logback by reading the XML config file.
-        // If the file does not exist, it will be created with some defaults.
-        new LogbackStandalone("org.your.app", "myapp").init(logbackXmlFile);
-        // Launch your application here
+        // If the file does not exist, it will be created with some
+        // defaults.
+        new LogbackStandalone().init(args, new NewLogConfigFileParams("org.fuin.ext4logback", "myapp"));
+        LOG.info("Application running...");
+        // Your code goes here...
         System.exit(0);
-    } catch (RuntimeException ex ) {
+    } catch (RuntimeException ex) {
         ex.printStackTrace(System.err);
         System.exit(1);
     }
