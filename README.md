@@ -1,4 +1,4 @@
-#ext4logback
+# ext4logback
 Extensions for Logback
 
 [![Build Status](https://fuin-org.ci.cloudbees.com/job/ext4logback/badge/icon)](https://fuin-org.ci.cloudbees.com/job/ext4logback/)
@@ -9,7 +9,7 @@ Extensions for Logback
 
 <a href="https://fuin-org.ci.cloudbees.com/job/ext4logback"><img src="http://www.fuin.org/images/Button-Built-on-CB-1.png" width="213" height="72" border="0" alt="Built on CloudBees"/></a>
 
-##Features
+## Features
 
 Configuring Logback for a standalone application is easy:
 ```java
@@ -45,7 +45,7 @@ public static void main(final String[] args) {
 ```
 
 
-##Snapshots
+## Snapshots
 
 Snapshots can be found on the [OSS Sonatype Snapshots Repository](http://oss.sonatype.org/content/repositories/snapshots/org/fuin "Snapshot Repository"). 
 
