@@ -44,6 +44,8 @@ public static void main(final String[] args) {
 }
 ```
 
+## Example usage
+There is a simple example project available here: [Example Project](example)
 
 ## Snapshots
 
