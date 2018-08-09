@@ -1,13 +1,11 @@
 # ext4logback
 Extensions for Logback
 
-[![Build Status](https://fuin-org.ci.cloudbees.com/job/ext4logback/badge/icon)](https://fuin-org.ci.cloudbees.com/job/ext4logback/)
+[![Build Status](https://jenkins.fuin.org/job/ext4logback/badge/icon)](https://jenkins.fuin.org/job/ext4logback/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fuin/ext4logback/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fuin/ext4logback/)
 [![Javadocs](https://www.javadoc.io/badge/org.fuin/ext4logback.svg)](https://www.javadoc.io/doc/org.fuin/ext4logback)
 [![LGPLv3 License](http://img.shields.io/badge/license-LGPLv3-blue.svg)](https://www.gnu.org/licenses/lgpl.html)
 [![Java Development Kit 1.8](https://img.shields.io/badge/JDK-1.8-green.svg)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-
-<a href="https://fuin-org.ci.cloudbees.com/job/ext4logback"><img src="http://www.fuin.org/images/Button-Built-on-CB-1.png" width="213" height="72" border="0" alt="Built on CloudBees"/></a>
 
 ## Features
 
