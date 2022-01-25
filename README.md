@@ -1,11 +1,15 @@
 # ext4logback
 Extensions for Logback
 
-[![Build Status](https://jenkins.fuin.org/job/ext4logback/badge/icon)](https://jenkins.fuin.org/job/ext4logback/)
+[![Java Maven Build](https://github.com/fuinorg/ext4logback/actions/workflows/maven.yml/badge.svg)](https://github.com/fuinorg/ext4logback/actions/workflows/maven.yml)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fuin/ext4logback/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fuin/ext4logback/)
 [![Javadocs](https://www.javadoc.io/badge/org.fuin/ext4logback.svg)](https://www.javadoc.io/doc/org.fuin/ext4logback)
 [![LGPLv3 License](http://img.shields.io/badge/license-LGPLv3-blue.svg)](https://www.gnu.org/licenses/lgpl.html)
-[![Java Development Kit 1.8](https://img.shields.io/badge/JDK-1.8-green.svg)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+[![Java Development Kit 11](https://img.shields.io/badge/JDK-11-green.svg)](https://openjdk.java.net/projects/jdk/11/)
+
+## Versions
+- 0.3.x (or later) = **Java 11**
+- 0.2.0 = **Java 8**
 
 ## Features
 
