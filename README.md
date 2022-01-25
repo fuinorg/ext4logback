@@ -15,7 +15,8 @@ Extensions for Logback
 
 Configuring Logback for a standalone application is easy:
 ```java
-new LogbackStandalone().init(new File("path/to/your/logback.xml"), new NewLogConfigFileParams("your.app.package", "myapp"));
+new LogbackStandalone().init(new File("path/to/your/logback.xml"), 
+      new NewLogConfigFileParams("your.app.package", "myapp"));
 ```
 For more options, see [JavaDoc](https://www.javadoc.io/doc/org.fuin/ext4logback).
 
