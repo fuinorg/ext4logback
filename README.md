@@ -35,7 +35,8 @@ public static void main(final String[] args) {
         // Initializes Logback by reading the XML config file.
         // If the file does not exist, it will be created with some defaults.
         // This is a convenience method that directly uses the main method's arguments.
-        new LogbackStandalone().init(args, new NewLogConfigFileParams("your.app.package", "myapp"));
+        new LogbackStandalone().init(args, 
+               new NewLogConfigFileParams("your.app.package", "myapp"));
         LOG.info("Application running...");
         // Your code goes here...
         System.exit(0);
