@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ExampleApp {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ExampleApp.class);
-    
     /**
      * Starts the application.
      * 
@@ -21,14 +19,22 @@ public class ExampleApp {
      */
     public static void main(final String[] args) {
         try {
-            // Initializes Logback by reading the XML config file.
+            // Initializes Logback by reading the "logback.xml" config file.
             // If the file does not exist, it will be created with some defaults.
             // This is a convenience method that directly uses the main method's arguments.
             new LogbackStandalone().init(args, new NewLogConfigFileParams("org.fuin.ext4logback.example", "ext4logback-example-app"));
-            LOG.info("Application running...");
-            // Your code goes here...
+
+            // Avoid early initialization of Logger and use local variable instead of static constant
+            final Logger log = LoggerFactory.getLogger(ExampleApp.class);
+
+            // Will be logged into log file "ext4logback-example-app.log" if "logback.xml" does not exist on first start
+            log.info("Application running...");
+
+            // Your code goes here... ("System.out" as "your code" replacement)
             System.out.println("Here we go!");
+
             System.exit(0);
+
         } catch (RuntimeException ex) {
             ex.printStackTrace(System.err);
             System.exit(1);
