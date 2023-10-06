@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>ext4logback</artifactId>
-	<version>0.4.0-SNAPSHOT</version>
+	<version>0.4.0</version>
 	<name>Maven Archetyper</name>
 	<description>Creates Maven archetypes from an existing project</description>
 
